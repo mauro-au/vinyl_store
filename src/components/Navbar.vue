@@ -1,10 +1,10 @@
 <template>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="container">
     <!-- Brand -->
     <div class="navbar-brand">
       <router-link to="/" class="navbar-item">
-        {{ brand }}
+        <img src="/img/logo.svg" alt="">
       </router-link>
       <a role="button"
       class="navbar-burger burger" aria-label="menu" aria-expanded="false"
@@ -125,7 +125,10 @@ export default {
 
 <style lang="scss" scoped>
 nav {
-  height: 3.25rem;
-  background-color: rgba(31, 202, 74, 0.219);
+  height: 4.25rem;
+  background-color: #000;
+}
+.navbar-item img{
+  max-height: 100% !important;
 }
 </style>
