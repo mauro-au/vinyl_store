@@ -8,7 +8,7 @@
               Los mejores vinilos
             </h1>
             <h2 class="subtitle">
-              En un solo luga
+              En un solo lugar
             </h2>
           </div>
           <div class="search">
@@ -50,7 +50,7 @@
             <div class="card-content">
               <div class="content card-detail">
                 <div class="card-description">
-                  <p class="price">$ {{ parseInt(p.data.price) }}</p>
+                  <p class="price">$ {{ p.data.price * p.qty }}</p>
                   <!-- <div class="has-spacing-bottom"> -->
                   <!-- <div class="has-spacing-bottom">
                   <span class="tag is-medium">tortor</span>
@@ -124,7 +124,7 @@ export default {
   computed: {
     ...mapState(["products"]),
     computedProductList() {
-      console.log(this.products);
+      // console.log(this.products);
       return this.products.filter((p) => {
         return p.data.name.toLowerCase().includes(this.search.toLowerCase());
       });

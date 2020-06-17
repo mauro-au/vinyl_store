@@ -50,6 +50,11 @@
                 {{ getCurrentUser ? getCurrentUser.email : '' }}
               </p>
               <hr class="navbar-divider">
+              
+              <router-link to="/" class="navbar-item">
+                  Home
+              </router-link>
+
               <a class="navbar-item" @click="showCart">
                 Ver Carrito
               </a>
