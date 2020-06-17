@@ -21,6 +21,9 @@ export default {
 
 
 <style lang="scss">
+html{
+  background: #e0e0e0 !important;
+}
 .fade-enter-active, .fade-leave-active {
   transition: .3s;
 }

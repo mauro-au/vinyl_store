@@ -5,7 +5,7 @@
       <div class="container">
         <form class="login-container">
           <div class="control">
-            <label>Nombre</label>
+            <label>Nombre Banda</label>
             <input
               class="input"
               type="text"
@@ -14,7 +14,16 @@
             />
           </div>
           <div class="control">
-            <label>Picture</label>
+            <label>Album</label>
+            <input
+              class="input"
+              type="text"
+              placeholder="Normal input"
+              v-model="album"
+            />
+          </div>
+          <div class="control">
+            <label>Imagen</label>
             <input
               class="input"
               type="text"
@@ -48,10 +57,11 @@
     <section>
       <div class="container">
         <h1>Listar Productos</h1>
-        <table class="table">
+        <table class="table is-responsive">
           <thead>
             <tr>
-              <th>Nombre Producto</th>
+              <th>Nombre Banda</th>
+              <th>Album</th>
               <th>Precio</th>
               <th>Descripción</th>
               <th>Imagen</th>
@@ -61,6 +71,7 @@
           <tbody>
             <tr v-for="p in computedProductList" :key="p.id">
               <td>{{ p.data.name }}</td>
+              <td>{{ p.data.album }}</td>
               <td>{{ p.data.price }}</td>
               <td>{{ p.data.description }}</td>
               <td><img alt="product logo" :src="p.data.picture"></td>
@@ -98,6 +109,7 @@ export default {
     createProduct() {
       let create = {
         name: this.name,
+        album: this.album,
         picture: this.picture,
         price: this.price,
         description: this.description,
@@ -138,6 +150,7 @@ export default {
         )
         .then((response) =>{
             this.name = response.data.name
+            this.album = response.data.album
             this.picture = response.data.picture
             this.price = response.data.price
             this.description = response.data.description
@@ -147,6 +160,7 @@ export default {
     updateProduct(id){
       let create = {
         name: this.name,
+        album: this.album,
         picture: this.picture,
         price: this.price,
         description: this.description,
@@ -156,6 +170,7 @@ export default {
         )
         .then(() => {
           this.name = ''
+          this.album = ''
           this.price = ''
           this.picture = ''
           this.description = ''
@@ -179,4 +194,79 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+
+@media screen and (max-width: 800px) {
+  .is-responsive {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    position: relative;
+  }
+
+  .is-responsive th,
+  .is-responsive td {
+    margin: 0;
+    vertical-align: top;
+  }
+  .is-responsive th {
+    text-align: left;
+  }
+  .is-responsive thead {
+    border-right: solid 2px #dbdbdb;
+    display: block;
+    float: left;
+  }
+  .is-responsive thead tr {
+    display: block;
+    padding: 0 10px 0 0;
+  }
+
+  .is-responsive thead td,
+  .is-responsive thead th {
+    border-width: 0 0 1px;
+  }
+  .is-responsive tbody {
+    display: block;
+    width: auto;
+    position: relative;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .is-responsive tbody tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  .is-responsive th {
+    display: block;
+    text-align: right;
+  }
+  .is-responsive td {
+    display: block;
+    min-height: 1.25em;
+    text-align: left;
+  }
+  .is-responsive th:last-child,
+  .is-responsive td:last-child {
+    border-bottom-width: 0;
+  }
+  .is-responsive tr:last-child td:not(:last-child) {
+    border: 1px solid #dbdbdb;
+    border-width: 0 0 1px;
+  }
+  .is-responsive.is-bordered td,
+  .is-responsive.is-bordered th {
+    border-width: 1px;
+  }
+  .is-responsive.is-bordered tr td:last-child,
+  .is-responsive.is-bordered tr th:last-child {
+    border-bottom-width: 1px;
+  }
+  .is-responsive.is-bordered tr:last-child td,
+  .is-responsive.is-bordered tr:last-child th {
+    border-width: 1px;
+  }
+}
+
+</style>

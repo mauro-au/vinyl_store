@@ -87,7 +87,7 @@ export default {
           this.$router.push('/')
         })
         .catch(() => {
-          console.log('Usuario no authenticado');
+          alert('Usuario no authenticado');
         })
       }
     }

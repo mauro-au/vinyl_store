@@ -5,10 +5,10 @@
         <div class="container header">
           <div class="header-title">
             <h1 class="title">
-              Nuestros Productos
+              Los mejores vinilos
             </h1>
             <h2 class="subtitle">
-              Primary subtitle
+              En un solo luga
             </h2>
           </div>
           <div class="search">
@@ -33,12 +33,9 @@
       </div>
     </section>
 
-    <div class="container has-padding-5">
-      <h2 class="has-text-centered is-size-5">
-        NUEVOS LANZAMIENTOS EN LA TIENDA
-      </h2>
+    <div class="container">
       <div class="columns is-multiline">
-        <div class="column is-4" v-for="p in computedProductList" :key="p.id">
+        <div class="column is-4 card-container" v-for="p in computedProductList" :key="p.id">
           <!-- Item -->
           <div class="card has-equal-height">
             <div class="image-card">
@@ -46,14 +43,14 @@
                 <img alt="product" :src="p.data.picture" />
                 <div class="product-title">
                   <h3 class="title">{{ p.data.name }}</h3>
-                  <h4>Altars of madness</h4>
+                  <h4>{{ p.data.album }}</h4>
                 </div>
               </div>
             </div>
             <div class="card-content">
               <div class="content card-detail">
                 <div class="card-description">
-                  <p class="subtitle">$ {{ parseInt(p.data.price) }}</p>
+                  <p class="price">$ {{ parseInt(p.data.price) }}</p>
                   <!-- <div class="has-spacing-bottom"> -->
                   <!-- <div class="has-spacing-bottom">
                   <span class="tag is-medium">tortor</span>
@@ -65,24 +62,21 @@
                   <p>{{ p.data.description }}</p>
                 </div>
                 <!-- <p></p> -->
-                <div class="card-footer">
-                  <div class="counter">
-                    <button @click="decrQty(p.id)" :disabled="p.qty === 1">
-                      <i class="mdi mdi-minus"></i>
-                    </button>
-                    {{ p.qty }}
-                    <button @click="incrQty(p.id)">
-                      <i class="mdi mdi-plus"></i>
-                    </button>
-                  </div>
-                  <button
-                    @click="addToCart(p)"
-                    class="button is-pulled-right is-warning"
-                  >
-                    <i class="mdi mdi-cart"></i>
-                  </button>
-                </div>
-                <div class="is-clearfix"></div>
+              </div>
+            </div>
+
+            <div class="cardfooter">
+              <div class="counter">
+                <button @click="decrQty(p.id)" :disabled="p.qty === 1">
+                  <i class="mdi mdi-minus"></i>
+                </button>
+                {{ p.qty }}
+                <button @click="incrQty(p.id)">
+                  <i class="mdi mdi-plus"></i>
+                </button>
+              </div>
+              <div @click="addToCart(p)" class="is-pulled-right clickable">
+                <img src="/img/cart.svg" alt="" />
               </div>
             </div>
           </div>
@@ -166,27 +160,47 @@ export default {
   }
 }
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    height: 63%;
+    align-items: flex-end;
+
+  .title{
+    color: #fff;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.84);
+  }
+  .subtitle{
+    font-size: 2rem;
+    color: #fff;
+    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.84);
+  }
 }
 .hero {
   background: url("/img/header.png") no-repeat bottom !important;
   background-size: cover !important;
-  height: 290px !important;
+  height: 435px !important;
+  margin-bottom: 70px;
 }
 .hero-body {
-  padding: 4rem 1.5rem;
-  display: flex;
-  align-items: flex-end;
+    display: flex;
+    align-items: flex-end;
+}
+    .header-title {
+    align-self: flex-start;
 }
 .input {
   padding: 10px 10px 10px 3.5rem !important;
   height: auto;
   border-radius: 30px;
+-webkit-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
+-moz-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
+box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
 }
 .search {
-  width: 22%;
+    width: 22%;
+    align-self: flex-end;
 }
 .icon i {
   font-size: 1.8rem;
@@ -220,9 +234,33 @@ export default {
   border-radius: 20px;
   height: 100%;
 }
-.card-detail{
+.card-detail {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+}
+.card-container{
+  padding: 20px;
+}
+.main-subtitle {
+  margin: 3rem;
+}
+.cardfooter {
+position: absolute;
+    bottom: 0;
+    padding: 15px 26px;
+    width: 100%;
+}
+.card-content{
+  margin-bottom: 55px;
+}
+.clickable {
+  cursor: pointer;
+}
+.price{
+      color: #4a4a4a;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.25;
 }
 </style>
