@@ -5,7 +5,7 @@
         <div class="container header">
           <div class="header-title">
             <h1 class="title">
-              Los mejores vinilos
+              Lo mejor en vinilos
             </h1>
             <h2 class="subtitle">
               En un solo lugar
@@ -167,12 +167,12 @@ export default {
 
   .title{
     color: #fff;
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: bold;
     text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.84);
   }
   .subtitle{
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #fff;
     text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.84);
   }
