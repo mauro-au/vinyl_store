@@ -1,51 +1,67 @@
 <template>
   <div>
-    <div class="columns">
-      <div class="column is-one-third"></div>
-      <div class="column is-one-third">
-        <div class="login-container card">
-          <form>
-            <!-- Field email -->
-            <div class="field">
-              <!-- Error -->
-              <span v-if="formHasErrors" class="has-text-danger">
-                <i class="mdi mdi-alert"></i>
-                Usuario o Contraseña incorrectos, Intente nuevamente.
-              </span>
+    <section class="hero is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-half">
+              <form class="box box-form">
+                <div class="field has-text-centered">
+                  <img src="/img/logo_icon.svg" width="167" />
+                  <h1 class="box-title">Iniciar Sesión</h1>
+                </div>
+                <div
+                  v-if="formHasErrors"
+                  class="notification is-danger is-light is-flex"
+                >
+                  <i class="mdi mdi-24px mdi-account-cancel mr-4"></i>
+                  <span class="heading">
+                    Usuario o Contraseña incorrectos, Intente nuevamente.
+                  </span>
+                </div>
+                <div class="field">
+                  <label class="label">Email</label>
+                  <div class="control has-icons-left">
+                    <input
+                      type="email"
+                      class="input is-medium"
+                      placeholder="ejemplo@ejemplo.com"
+                      v-model="credentials.email"
+                    />
+                    <span class="icon is-left">
+                      <i class="mdi mdi-email"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Contraseña</label>
+                  <div class="control has-icons-left">
+                    <input
+                      type="password"
+                      class="input is-medium"
+                      placeholder="*********"
+                      required
+                      v-model="credentials.password"
+                    />
+                    <span class="icon is-left">
+                      <i class="mdi mdi-key"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <button
+                    class="button is-success is-medium is-fullwidth mt-5"
+                    @click="login"
+                  >
+                    Acceder
+                  </button>
+                </div>
+              </form>
             </div>
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control has-icons-left has-icons-right">
-                <input type="email" name="email" id="email" placeholder="Email"
-                v-model="credentials.email"
-                class="input">
-                <span class="icon is-small is-left">
-                  <i class="mdi mdi-email"></i>
-                </span>
-              </div>
-            </div>
-            <!-- Field password -->
-            <div class="field">
-              <label class="label">Contraseña</label>
-              <div class="control has-icons-left has-icons-right">
-                <input type="password" name="password" id="password" placeholder="*******"
-                v-model="credentials.password"
-                class="input">
-                <span class="icon is-small is-left">
-                  <i class="mdi mdi-key"></i>
-                </span>
-              </div>
-            </div>
-            <!-- field submit -->
-            <div class="field">
-              <button class="button is-primary is-pulled-right" @click="login">Acceder</button>
-            </div>
-            <div class="is-clearfix"></div>
-          </form>
+          </div>
         </div>
       </div>
-      <div class="column is-one-third"></div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -57,50 +73,80 @@ import Firebase from "firebase";
 // Firebase.initializeApp(firebaseConfig);
 
 export default {
-  name: '',
+  name: "",
   components: {},
   props: {},
   data() {
     return {
       credentials: {
-        email: '',
-        password: ''
+        email: "",
+        password: "",
       },
-      formHasErrors: false
-    }
+      formHasErrors: false,
+    };
   },
   methods: {
     login(e) {
-      e.preventDefault()
-      this.formHasErrors = this.credentials.email === '' || this.credentials.password === ''
-      if(!this.formHasErrors) {
+      e.preventDefault();
+      if (!this.formHasErrors) {
         // try login
         // Auth.login(this.credentials)
         Firebase.auth()
-        .signInWithEmailAndPassword(
-          this.credentials.email,
-          this.credentials.password
-        )
-        .then(() => {
-          let user = this.credentials.email
-          this.$store.dispatch('updateUser', user)
-          this.$router.push('/')
-        })
-        .catch(() => {
-          alert('Usuario no authenticado');
-        })
+          .signInWithEmailAndPassword(
+            this.credentials.email,
+            this.credentials.password
+          )
+          .then(() => {
+            let user = this.credentials.email;
+            this.$store.dispatch("updateUser", user);
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            this.formHasErrors = true;
+            setTimeout(() => {
+              this.formHasErrors = false;
+            }, 3000);
+            console.log(error);
+          });
       }
-    }
+    },
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {}
-}
+  mounted() {},
+};
 </script>
 
 <style lang="scss" scoped>
-.login-container {
-  padding: 2rem 1rem 0.5rem 1rem;
+.hero{
+  background: url('/img/login2.jpg') no-repeat;
+  background-size: cover;
+}
+.box-form {
+  padding: 3rem;
+  margin: 0rem;
+  border-radius: 30px;
+}
+.box-title{
+  font-size: 2.3em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 514px) {
+  .box-form {
+    margin: 0 4rem;
+  }
+}
+@media (min-width: 769px) {
+  .box-form {
+    margin: 0rem;
+  }
+}
+@media (min-width: 1216px) {
+  .box-form {
+    margin: 0 6rem;
+  }
 }
 </style>
