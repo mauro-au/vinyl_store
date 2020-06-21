@@ -120,7 +120,7 @@ export default {
 
 <style lang="scss" scoped>
 .hero{
-  background: url('/img/login2.jpg') no-repeat;
+  background: url('/img/login.jpg') no-repeat;
   background-size: cover;
 }
 .box-form {

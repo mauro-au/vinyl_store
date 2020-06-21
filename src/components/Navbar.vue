@@ -1,58 +1,60 @@
 <template>
-  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <nav
+    class="navbar is-fixed-top"
+    role="navigation"
+    aria-label="main navigation"
+  >
     <div class="container">
-    <!-- Brand -->
-    <div class="navbar-brand">
-      <router-link to="/" class="navbar-item">
-        <img src="/img/logo.svg" alt="">
-      </router-link>
-      <a role="button"
-      class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-      data-target="navbarMenu"
-      :class="{ 'is-active': displayMenu }"
-      @click="displayMenu = !displayMenu">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-    <!--  -->
-    <div id="navbarMenu" class="navbar-menu" :class="{ 'is-active': displayMenu }">
-        <div class="navbar-start">
-          <!--
-          <a class="navbar-item">
-            Home
-          </a>
-          -->
-        </div>
-
-        <div class="navbar-end">
+      <!-- Brand -->
+      <div class="navbar-brand">
+        <router-link to="/" class="navbar-item">
+          <img src="/img/logo.svg" class="navbar-logo" alt="" />
+        </router-link>
+        <a
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarMenu"
+          :class="{ 'is-active': displayMenu }"
+          @click="displayMenu = !displayMenu"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <!--  -->
+      <div
+        id="navbarMenu"
+        class="navbar-menu"
+        :class="{ 'is-active': displayMenu }"
+      >
+        <div class="navbar-end navbar-center">
           <a data-testId="cart" class="navbar-item" @click="showCart">
-            <span class="icon">
-              <img src="/img/supermarket.svg" alt="" class="">
-              <span
-              class="tag is-warning"
-              v-if="$store.getters.shoppingCart.list.length > 0">
+            <span class="icon cart__icon">
+              <img src="/img/supermarket0.svg" alt="" class="" />
+              <span class="tag is-warning" v-if="$store.getters.shoppingCart.list.length > 0">
                 {{ $store.getters.shoppingCart.list.length }}
               </span>
             </span>
           </a>
-          <router-link v-if="!isLoggedIn" to="/login" class="navbar-item">
+          <router-link v-if="!isLoggedIn" to="/login" class="button is-rounded navbar-login mx-4">
             Login
           </router-link>
+          
           <div v-else class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              <img src="/img/user.svg" alt="">
+            <a class="navbar-link navbar-user-content">
+              <img src="/img/user.svg" class="navbar-user" alt="" />
             </a>
-
             <div class="navbar-dropdown">
               <p class="navbar-item">
-                {{ getCurrentUser ? getCurrentUser.email : '' }}
+                {{ getCurrentUser ? getCurrentUser.email : "" }}
               </p>
-              <hr class="navbar-divider">
-              
+              <hr class="navbar-divider" />
+
               <router-link to="/" class="navbar-item">
-                  Home
+                Home
               </router-link>
 
               <a class="navbar-item" @click="showCart">
@@ -69,8 +71,9 @@
           </div>
         </div>
       </div>
-    <!--  -->
-    </div> <!-- container -->
+      <!--  -->
+    </div>
+    <!-- container -->
   </nav>
 </template>
 
@@ -81,87 +84,145 @@ import Firebase from "firebase";
 // Firebase.initializeApp(firebaseConfig);
 
 export default {
-  name: '',
+  name: "",
   components: {},
   props: {
     brand: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   data() {
     return {
       displayMenu: false,
-      currentUser: ''
-    }
+      currentUser: "",
+    };
   },
   methods: {
     showCart(event) {
       event.preventDefault();
-      this.$store.dispatch('updateShowCart', true)
+      this.$store.dispatch("updateShowCart", true);
     },
     logout() {
       // let user = Firebase.auth().currentUser;
-      Firebase.auth().signOut().then(()=>{
-        this.$router.push('login')
-        this.$store.dispatch('updateUser', false)
-        this.displayMenu = false
-      })
-    }
+      Firebase.auth()
+        .signOut()
+        .then(() => {
+          this.$router.push("login");
+          this.$store.dispatch("updateUser", false);
+          this.displayMenu = false;
+        });
+    },
   },
   computed: {
     // displayMenuStyle() {
     //   return { display: this.displayMenu ? 'block' : 'none' }
     // },
     isLoggedIn() {
-      return this.$store.getters.isLoggedIn
+      return this.$store.getters.isLoggedIn;
     },
-    getCurrentUser(){
-      return Firebase.auth().currentUser ? Firebase.auth().currentUser : ''
-    }
+    getCurrentUser() {
+      return Firebase.auth().currentUser ? Firebase.auth().currentUser : "";
+    },
   },
   watch: {},
   created() {},
-  mounted() {}
-}
+  mounted() {},
+};
 </script>
 
 <style lang="scss" scoped>
 nav {
-  height: 4.25rem;
-  background-color: #000000bf;
-  -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.75);
+  background-color: #000000d9;
+  -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.75);
 }
-.navbar-item img{
+.navbar-item img {
   max-height: 100% !important;
 }
-.navbar-item:hover{
+.navbar-item:hover {
   background: transparent;
 }
-.tag{
+.tag {
   border-radius: 50%;
   background: red !important;
   color: #fff !important;
-  margin-left: 10px;
+  margin-left: 15px;
+  margin-top: -10px;
+  position: absolute;
 }
-.navbar-dropdown{
+.navbar-dropdown {
   right: 0 !important;
   left: auto;
 }
-.navbar-link:hover, .navbar-link:focus{
-    border-radius: 22px;
-    margin-left: 20px;
+.navbar-dropdown a, .navbar-dropdown p{
+  color: #fff;
+  font-size: 1.2rem;
 }
-.navbar-link{
-    border-radius: 22px;
-    margin-left: 20px;
+.cart__icon {
+  width: auto;
+  margin-right: 10px !important;
+  margin-left: .7rem !important;
 }
-.icon{
-  width: 25px;
-}
-.navbar-item.has-dropdown:focus .navbar-link, .navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link{
+.navbar-item.has-dropdown:focus .navbar-link,
+.navbar-item.has-dropdown:hover .navbar-link,
+.navbar-item.has-dropdown.is-active .navbar-link {
   background: transparent;
+}
+.navbar-logo{
+    width: 6.5rem;
+}
+.navbar-center{
+  align-items: center;
+  position: relative;
+}
+.navbar-user {
+  width: 2.5rem;
+}
+.navbar-burger{
+  width: 6rem;
+  height: auto;
+  color: #fff;
+}
+.navbar-burger span{
+  width: 25px;
+  height: 2px;
+  border-radius: 25px;
+}
+.navbar-menu {
+  background-color: #0000;
+  -webkit-box-shadow: 0 8px 16px rgba(10,10,10,0.1);
+  box-shadow: 0 8px 16px rgba(10,10,10,0.1);
+  padding: 0.5rem 0;
+}
+.navbar-user-content{
+  position: absolute;
+  right: 0;
+  top: -57px;
+}
+#navbarMenu {
+  margin-top: 20px;
+}
+.navbar-login{
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+@media (min-width: 1023px) {
+.navbar-dropdown a, .navbar-dropdown p{
+  color: #000;
+}
+.navbar-user-content{
+  position: relative;
+  top: auto;
+}
+#navbarMenu {
+  margin-top: 0px;
+}
+.navbar-login{
+  position: relative;
+  right: 0px;
+}
 }
 </style>
