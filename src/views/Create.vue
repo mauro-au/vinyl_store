@@ -207,6 +207,9 @@ img{
     width: 20vh;
     border-radius: 10px;
 }
+.columns{
+  margin: 0;
+}
 @media screen and (max-width: 800px) {
   .is-responsive {
     width: 100%;
@@ -248,6 +251,8 @@ img{
   .is-responsive tbody tr {
     display: inline-block;
     vertical-align: top;
+    width: 100%;
+    border-right: 1px solid #eaeaea;
   }
   .is-responsive th {
     display: block;
@@ -257,6 +262,8 @@ img{
     display: block;
     min-height: 1.25em;
     text-align: left;
+    overflow: hidden;
+    margin: 0 10px;
   }
   .is-responsive th:last-child,
   .is-responsive td:last-child {
