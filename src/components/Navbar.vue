@@ -33,7 +33,7 @@
         <div class="navbar-end navbar-center">
           <a data-testId="cart" class="navbar-item" @click="showCart">
             <span class="icon cart__icon">
-              <img src="/img/supermarket0.svg" alt="" class="" />
+              <img src="/img/supermarket.svg" alt="" class="" />
               <span class="tag is-warning" v-if="$store.getters.shoppingCart.list.length > 0">
                 {{ $store.getters.shoppingCart.list.length }}
               </span>

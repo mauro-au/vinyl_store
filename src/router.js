@@ -9,23 +9,16 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    { 
-      path: '*',
-      component: () => import(/* webpackChunkName: "about" */ './views/404.vue')
+    {
+      path: '/',
+      name: 'home',
+      alias: ['/home', '/inicio'],
+      component: Home,
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
-      path: '/',
-      name: 'home',
-      alias: '/home',
-      component: Home,
     },
     {
       path: '/create',
@@ -33,24 +26,30 @@ const router = new Router({
       meta: {
         requireLogin: true
       },
-      component: () => import(/* webpackChunkName: "login" */ './views/Create.vue')
+      component: () => import(/* webpackChunkName: "create" */ './views/Create.vue')
     },
     {
       path: '/login',
       name: 'login',
+      meta: {
+        login: true
+      },
       component: () => import(/* webpackChunkName: "login" */ './views/Login.vue')
+    },
+    {
+      path: '*',
+      component: () => import(/* webpackChunkName: "not found" */ './views/NotFound.vue')
     }
   ]
 })
 
-router.beforeEach((to, from, next)=>{
+router.beforeEach((to, from, next) => {
   let user = Firebase.auth().currentUser;
-  let authRequired = to.matched.some(route => route.meta.requireLogin)
-  if (!user && authRequired) {
-    next('home')    
-  // } else if (user && !authRequired) {
-  //   next('home');
-  }else{
+  let authRequired = to.matched.some(route => route.meta.requireLogin);
+  let authLogin = to.matched.some(route => route.meta.login);
+  if (!user && authRequired || user && authLogin) {
+    next('/')
+  } else {
     next()
   }
 })
