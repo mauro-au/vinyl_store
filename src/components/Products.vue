@@ -1,71 +1,54 @@
 <template>
   <div>
-    <section class="hero is-bold">
-      <div class="hero-body">
-        <div class="container header">
-          <div class="header-title">
-            <h1 class="title">
+    <section class="header hero is-bold">
+      <header class="hero-body">
+        <div class="header__container container">
+          <div class="header__content">
+            <h1 class="header__title">
               Lo mejor en vinilos
             </h1>
-            <h2 class="subtitle">
+            <h2 class="header__subtitle">
               En un solo lugar
             </h2>
           </div>
-          <div class="search">
-            <!-- <label for="searchBox">Buscar </label>
-            <input type="text" id="searchBox" v-model="search"/> -->
+          <div class="header__search">
             <div class="field">
               <p class="control has-icons-left">
-                <input
-                  class="input"
-                  type="text"
-                  placeholder="Buscar"
-                  v-model="search"
-                />
-                <span class="icon is-small is-left">
+                <input class="input is-medium" type="text" placeholder="Buscar" v-model="search"/>
+                <span class="header__icon icon is-small is-left">
                   <i class="mdi mdi-magnify"></i>
                 </span>
               </p>
             </div>
-            <!--  -->
           </div>
         </div>
-      </div>
+      </header>
     </section>
 
-    <div class="container">
+    <section class="container">
       <div class="columns is-multiline">
-        <div class="column is-4 card-container" v-for="p in computedProductList" :key="p.id">
+        <div class="column is-4-desktop is-6-tablet card-container" v-for="p in computedProductList" :key="p.id">
           <!-- Item -->
           <div class="card has-equal-height">
             <div class="image-card">
-              <div class="image has-spacing image">
+              <div class="image has-spacing">
                 <img alt="product" :src="p.data.picture" />
-                <div class="product-title">
-                  <h3 class="title">{{ p.data.name }}</h3>
-                  <h4>{{ p.data.album }}</h4>
+                <div class="product">
+                  <h3 class="product__title">{{ p.data.name }}</h3>
+                  <h4 class="product__subtitle">{{ p.data.album }}</h4>
                 </div>
               </div>
             </div>
             <div class="card-content">
-              <div class="content card-detail">
-                <div class="card-description">
-                  <p class="price">$ {{ p.data.price * p.qty }}</p>
-                  <!-- <div class="has-spacing-bottom"> -->
-                  <!-- <div class="has-spacing-bottom">
-                  <span class="tag is-medium">tortor</span>
-                  <span class="tag is-medium">suscipit</span>
-                  <span class="tag is-medium">Vivamus</span>
-                </div> -->
-                  <!-- </div> -->
-                  <!-- <p></p> -->
+              <div class="content card__detail">
+                <div class="card__description">
+                  <p class="card__price">$ {{ p.data.price * p.qty }}</p>
                   <p>{{ p.data.description }}</p>
                 </div>
-                <!-- <p></p> -->
               </div>
             </div>
 
-            <div class="cardfooter">
+            <div class="card__footer">
               <div class="counter">
                 <button @click="decrQty(p.id)" :disabled="p.qty === 1">
                   <i class="mdi mdi-minus"></i>
@@ -81,16 +64,12 @@
             </div>
           </div>
         </div>
-        <!-- End Item  -->
       </div>
-      <!--  -->
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
-// import { Products } from "../services/API";
-
 import { mapState } from "vuex";
 
 export default {
@@ -146,6 +125,7 @@ export default {
   },
   mounted() {},
 };
+
 </script>
 
 <style lang="scss" scoped>
@@ -159,69 +139,53 @@ export default {
     cursor: pointer;
   }
 }
-.header {
+.header{
+  background: url("/img/header.jpg") no-repeat bottom !important;
+  background-size: cover !important;
+  height: 65vh !important;
+  margin-bottom: 70px;
+  &__container{
     display: flex;
-    justify-content: space-between;
-    height: 63%;
-    align-items: flex-end;
-
-  .title{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  &__title{
     color: #fff;
     font-size: 4rem;
     font-weight: bold;
-    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.84);
   }
-  .subtitle{
+  &__subtitle{
     font-size: 2.5rem;
     color: #fff;
-    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.84);
+  }
+  &__search {
+    width: 90%;
+    margin-top: 40px;
+  }
+  &__icon {
+    width: 3.5rem !important;
+    height: 3rem !important;
+    i{
+      font-size: 1.8rem;
+      color: #a7a5a5;
   }
 }
-.hero {
-  background: url("/img/header.png") no-repeat bottom !important;
-  background-size: cover !important;
-  height: 435px !important;
-  margin-bottom: 70px;
+
 }
-.hero-body {
-    display: flex;
-    align-items: flex-end;
-}
-    .header-title {
-    align-self: flex-start;
-}
-.input {
-  padding: 10px 10px 10px 3.5rem !important;
-  height: auto;
-  border-radius: 30px;
--webkit-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
--moz-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
-}
-.search {
-    width: 22%;
-    align-self: flex-end;
-}
-.icon i {
-  font-size: 1.8rem;
-  color: #a7a5a5;
-}
-.icon {
-  width: 3.5rem !important;
-  height: 3rem !important;
-}
-.product-title {
+.product{
   background: rgba(0, 0, 0, 0.6);
   position: absolute;
   bottom: 0px;
   padding: 20px;
   width: 100%;
-  .title {
+  &__title {
     font-weight: bold;
     color: #fff;
     margin: 0;
+    font-size: 2.2rem;
   }
-  h4 {
+  &__subtitle{
     color: #fff;
     font-size: 1.5em;
     font-weight: normal;
@@ -230,37 +194,66 @@ box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
 .image img {
   border-radius: 20px 20px 0 0;
 }
-.card {
+.card{
   border-radius: 20px;
   height: 100%;
-}
-.card-detail {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-.card-container{
-  padding: 20px;
-}
-.main-subtitle {
-  margin: 3rem;
-}
-.cardfooter {
-position: absolute;
-    bottom: 0;
-    padding: 15px 26px;
-    width: 100%;
-}
-.card-content{
-  margin-bottom: 55px;
-}
-.clickable {
-  cursor: pointer;
-}
-.price{
+  &__detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  &__price{
       color: #4a4a4a;
     font-size: 1.5rem;
     font-weight: bold;
     line-height: 1.25;
+  }
+  &__footer {
+    padding: 0px 26px 35px;
+  }
+  &-container {
+    padding: 25px;
+  }
+}
+
+.hero-body {
+    display: flex;
+    align-items: center;
+}
+.input {
+  padding: 10px 10px 10px 3.5rem !important;
+  height: auto;
+  border-radius: 30px;
+  -webkit-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
+  -moz-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
+  box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
+}
+.main-subtitle {
+  margin: 3rem;
+}
+.clickable {
+  cursor: pointer;
+}
+.columns{
+  margin: 0;
+}
+@media (min-width: 515px) {
+  .header__search {
+    width: 50%;
+  }
+}
+@media (min-width: 769px) {
+  .card__footer {
+    position: absolute;
+    bottom: 0;
+    padding: 15px 26px;
+    width: 100%;
+  }
+  .card__description{
+    margin-bottom: 55px;
+  }
+  .header__search {
+      width: 30%;
+  }
 }
 </style>
