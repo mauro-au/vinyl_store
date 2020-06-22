@@ -33,12 +33,10 @@ export default new Vuex.Store({
     showCart: false,
     products: [],
     loading: false,
-    edit: false
+    edit: false,
+    overlay: false
   },
   mutations: {
-    LOADING_PRODUCT(state) {
-      state.loading = !state.loading
-    },
     GET_PRODUCTS(state, products) {
       state.products = []
       products.forEach((prod)=>{
@@ -90,7 +88,9 @@ export default new Vuex.Store({
     },
     UPDATE_EDIT(state) {
       state.edit = !state.edit
-    }
+    },
+    LOADING_OVERLAY(state) { state.overlay = true},
+    LOADING_OVERLAY_END(state) { state.overlay = false},
   },
   actions: {
     // User
@@ -136,12 +136,13 @@ export default new Vuex.Store({
       })
     },
     getProducts({ commit }) {
-      commit('LOADING_PRODUCT')
+      commit('LOADING_OVERLAY')
       axios.get('https://us-central1-tddg3-ca51a.cloudfunctions.net/products/products', {
         headers: { "Content-type": "text/plain" }
       }).then((accept) => {
         let data = accept.data
         commit('GET_PRODUCTS', data)
+        commit('LOADING_OVERLAY_END')
       })
     },
     updateEdit({ commit }) {

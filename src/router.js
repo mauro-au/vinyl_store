@@ -38,7 +38,7 @@ const router = new Router({
     },
     {
       path: '*',
-      component: () => import(/* webpackChunkName: "not found" */ './views/NotFound.vue')
+      component: () => import(/* webpackChunkName: "notfound" */ './views/NotFound.vue')
     }
   ]
 })

@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <navbar :brand="'My Store'"/>
-
+    <navbar :brand="'Vinyl Store'"/>
+    <div class="modal" :class="{'is-active': overlay}">
+      <div class="modal-background"></div>
+        <div class="modal-content loading">
+          <img src="/img/spinner.svg" alt="">
+        </div>
+    </div>
     <transition name='fade'>
       <router-view/>
     </transition>
@@ -11,11 +16,15 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import {mapState} from 'vuex'
 
 export default {
   components: {
     Navbar,
   },
+    computed:{
+        ...mapState([ 'overlay' ])
+    },
 }
 </script>
 
@@ -34,5 +43,9 @@ html{
  
 .fade-enter, .fade-leave-active {
   opacity: 0
+}
+.loading{
+  display: flex;
+  justify-content: center;
 }
 </style>
