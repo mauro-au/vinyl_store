@@ -6,8 +6,8 @@
           <div class="column is-half">
             <div class="error__body">
               <h1 class="error__title">404</h1>
-              <h2 class="error__subtitle">Ooops... Pagina no encontrada!!</h2>
-              <p class="size-medium">El enlace que estas buscando es incorrecto</p>
+              <h2 class="error__subtitle">Ooops... Página no encontrada!!</h2>
+              <p class="size-medium">El enlace que estás buscando es incorrecto</p>
               <router-link to="/">
                 <button class="button is-success mt-5 is-medium">Volver al inicio</button>
               </router-link>

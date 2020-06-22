@@ -4,70 +4,82 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-two-thirds">
-        <h2 class="title is-1 has-text-centered create__title">Crear Producto</h2>
-        <form class="login-container">
-          <div class="field">
-            <label>Nombre de Banda</label>
-            <input class="input is-medium" type="text" placeholder="Nombre de Banda" v-model="name"/>
-          </div>
-          <div class="field">
-            <label>Album</label>
-            <input class="input is-medium" type="text" placeholder="Album" v-model="album"/>
-          </div>
-          <div class="field">
-            <label>Imagen</label>
-            <input class="input is-medium" type="text" placeholder="Imagen" v-model="picture"/>
-          </div>
-          <div class="field">
-            <label>Precio</label>
-            <input class="input is-medium" type="number" placeholder="Precio" v-model="price"/>
-          </div>
-          <div class="field">
-            <label>Descripción</label>
-            <textarea class="textarea is-medium" placeholder="Descripción" v-model="description"></textarea>
-          </div>
+            <h2 class="title is-1 has-text-centered create__title">Crear Producto</h2>
+            <form class="login-container">
+              <div v-if="errors.length" class="notification is-danger is-light box">
+                <b>Por favor, completar los siguientes campos:</b>
+                <ul>
+                  <li v-for="error in errors" :key="error"><i class="mdi mdi-24px mdi-alert-circle  mr-4"></i>{{ error }}</li>
+                </ul>
+              </div>
 
-          <button class="button is-success" @click.prevent="createProduct">Añadir</button>
-          <button class="button is-info mx-4" v-if="edit" @click="updateProduct(id)">Actualizar</button>
-        </form>
-      </div>
-      </div>
+              <div class="field">
+                <label>Nombre de Banda</label>
+                <input class="input is-medium" type="text" placeholder="Nombre de Banda" v-model="name"/>
+              </div>
+
+              <div class="field">
+                <label>Album</label>
+                <input class="input is-medium" type="text" placeholder="Album" v-model="album"/>
+              </div>
+
+              <div class="field">
+                <label>Imagen</label>
+                <input class="input is-medium" type="text" placeholder="Imagen" v-model="picture"/>
+              </div>
+              
+              <div class="field">
+                <label>Precio</label>
+                <input class="input is-medium" type="number" placeholder="Precio" v-model="price"/>
+              </div>
+              
+              <div class="field">
+                <label>Descripción</label>
+                <textarea class="textarea is-medium" placeholder="Descripción" v-model="description"></textarea>
+              </div>
+
+              <button class="button is-success" @click.prevent="createProduct">Añadir</button>
+              <button class="button is-info mx-4" v-if="edit" @click.prevent="updateProduct(id)">Actualizar</button>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
+
     <section>
       <div class="container">
         <h2 class="title is-1 has-text-centered create__title">Lista de Productos</h2>
         <div class="columns is-centered">
-        <table class="table is-responsive">
-          <thead>
-            <tr>
-              <th>Banda</th>
-              <th>Album</th>
-              <th>Precio</th>
-              <th class="description-th">Descripción</th>
-              <th>Imagen</th>
-              <th colspan="2" class="action">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="p in computedProductList" :key="p.id">
-              <td>{{ p.data.name }}</td>
-              <td>{{ p.data.album }}</td>
-              <td>${{ p.data.price }}</td>
-              <td>{{ p.data.description.substring(0,100) }}...</td>
-              <td><img alt="product logo" :src="p.data.picture"></td>
-              <td>
-                <button class="button btn-success" @click="editProduct(p.id)">Editar</button>
-              </td>
-              <td>
-                <button class="button btn-danger" @click="deleteProduct(p.id)">
-                  Borrar
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          <table class="table is-responsive mb-6">
+            <thead>
+              <tr>
+                <th>Banda</th>
+                <th>Album</th>
+                <th>Precio</th>
+                <th class="description-th">Descripción</th>
+                <th>Imagen</th>
+                <th colspan="2" class="action">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="p in computedProductList" :key="p.id">
+                <td>{{ p.data.name }}</td>
+                <td>{{ p.data.album }}</td>
+                <td>${{ p.data.price }}</td>
+                <td>{{ p.data.description.substring(0,100) }}...</td>
+                <td><img alt="product logo" :src="p.data.picture"></td>
+                <td>
+                  <button class="button btn-success" @click="editProduct(p.id)">Editar</button>
+                </td>
+                <td>
+                  <button class="button btn-danger" @click="deleteProduct(p.id)">
+                    Borrar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   </div>
@@ -80,14 +92,40 @@ export default {
   data() {
     return {
       name: "",
+      album:"",
       picture: "",
       price: "",
       description: "",
-      id: undefined
+      id: undefined,
+      errors: [],
     };
   },
   methods: {
     ...mapActions(["updateEdit"]),
+
+    validation(){
+      if (this.name && this.album && this.picture && this.price && this.description) {
+        return true;
+      }
+      this.errors = [];
+
+      if (!this.name) {
+        this.errors.push('El nombre es obligatorio.');
+      }
+      if (!this.album) {
+        this.errors.push('La album es obligatoria.');
+      }
+      if (!this.picture) {
+        this.errors.push('La imagen es obligatoria.');
+      }
+      if (!this.price) {
+        this.errors.push('El precio es obligatoria.');
+      }
+      if (!this.description) {
+        this.errors.push('La desacripción es obligatoria.');
+      }
+    },
+
     createProduct() {
       let create = {
         name: this.name,
@@ -95,20 +133,28 @@ export default {
         picture: this.picture,
         price: this.price,
         description: this.description
-      };
-      axios
-        .post(
-          "https://us-central1-tddg3-ca51a.cloudfunctions.net/products/product",
-          create,
-          { headers: { "content-type": "application/json" } }
-        )
-        .then(response => {
-          console.log(response);
-          this.$store.dispatch("getProducts");
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      }; 
+
+      if (this.validation()) {
+       axios.post(
+          "https://us-central1-tddg3-ca51a.cloudfunctions.net/products/product", create,
+            { headers: { "content-type": "application/json" } }
+          )
+          .then(response => {
+            console.log(response);
+            this.$store.dispatch("getProducts");
+            this.name = "";
+            this.album = "";
+            this.price = "";
+            this.picture = "";
+            this.description = "";
+            this.errors = [];
+          })
+          .catch(error => {
+            console.log(error);
+            alert('que pasa')
+          });
+       }
     },
     deleteProduct(id) {
       let confirmation = confirm("Seguro?");
@@ -151,6 +197,7 @@ export default {
         price: this.price,
         description: this.description
       };
+      if (this.validation()){
       axios
         .put(
           `https://us-central1-tddg3-ca51a.cloudfunctions.net/products/product/${id}`,
@@ -165,10 +212,12 @@ export default {
           this.description = "";
           this.id = "";
           this.$store.dispatch("getProducts");
+          this.errors = [];
         })
         .catch(error => {
           console.log(error);
         });
+      }
     }
   },
   computed: {
