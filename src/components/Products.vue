@@ -224,9 +224,15 @@ export default {
   padding: 10px 10px 10px 3.5rem !important;
   height: auto;
   border-radius: 30px;
+  transition: 1s;
   -webkit-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
   -moz-box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
   box-shadow: 0px 10px 13px 4px rgba(0,0,0,0.54);
+}
+.input:focus {
+  -webkit-box-shadow: 0px 0px 21px 13px rgba(85,85,85,0.54);
+  -moz-box-shadow: 0px 0px 21px 13px rgba(85,85,85,0.54);
+  box-shadow: 0px 0px 21px 13px rgba(85,85,85,0.54);
 }
 .main-subtitle {
   margin: 3rem;

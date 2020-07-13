@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 
 import Firebase from "firebase";
-import firebaseConfig from "@/firebase";
+import firebaseConfig from "../config/firebase";
 
 Firebase.initializeApp(firebaseConfig);
 

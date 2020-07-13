@@ -10,13 +10,14 @@
                   <h1 class="box-title">Iniciar Sesión</h1>
                 </div>
 
-                <div v-if="formHasErrors" class="notification is-danger is-light is-flex box">
-                  <i class="mdi mdi-24px mdi-account-cancel mr-4"></i>
-                  <span class="heading">
-                    Usuario o Contraseña incorrectos, Intente nuevamente.
-                  </span>
-                </div>
-
+                <transition name='fade'>
+                  <div v-if="formHasErrors" class="notification is-danger is-light is-flex box">
+                    <i class="mdi mdi-24px mdi-account-cancel mr-4"></i>
+                    <span class="heading">
+                      Usuario o Contraseña incorrectos, Intente nuevamente.
+                    </span>
+                  </div>
+                </transition>
                 <div class="field">
                   <label class="label">Email</label>
                   <div class="control has-icons-left">
@@ -113,7 +114,21 @@ export default {
   font-weight: bold;
   margin-bottom: 20px;
 }
-
+.heading{
+  font-weight: bold;
+  letter-spacing: 0px;
+  font-size: 13px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: .2s;
+}
+.fade-enter-active {
+  transition-delay: .2s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+  margin-top:20px;
+}
 @media (min-width: 514px) {
   .box-form {
     margin: 0 4rem;

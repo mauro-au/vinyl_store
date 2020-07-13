@@ -42,7 +42,7 @@
           <router-link v-if="!isLoggedIn" to="/login" class="button is-rounded navbar-login mx-4">
             Login
           </router-link>
-          
+
           <div v-else class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link navbar-user-content">
               <img src="/img/user.svg" class="navbar-user" alt="" />
@@ -208,6 +208,12 @@ nav {
   position: absolute;
   top: 0;
   right: 15px;
+}
+.navbar-link:not(.is-arrowless) {
+    padding-right: 1.5em;
+}
+.navbar-link:not(.is-arrowless)::after {
+  display: none;
 }
 @media (min-width: 1023px) {
 .navbar-dropdown a, .navbar-dropdown p{

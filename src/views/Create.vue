@@ -27,12 +27,12 @@
                 <label>Imagen</label>
                 <input class="input is-medium" type="text" placeholder="Imagen" v-model="picture"/>
               </div>
-              
+
               <div class="field">
                 <label>Precio</label>
                 <input class="input is-medium" type="number" placeholder="Precio" v-model="price"/>
               </div>
-              
+
               <div class="field">
                 <label>Descripción</label>
                 <textarea class="textarea is-medium" placeholder="Descripción" v-model="description"></textarea>
@@ -133,15 +133,14 @@ export default {
         picture: this.picture,
         price: this.price,
         description: this.description
-      }; 
+      };
 
       if (this.validation()) {
        axios.post(
           "https://us-central1-tddg3-ca51a.cloudfunctions.net/products/product", create,
             { headers: { "content-type": "application/json" } }
           )
-          .then(response => {
-            console.log(response);
+          .then(() => {
             this.$store.dispatch("getProducts");
             this.name = "";
             this.album = "";
@@ -151,8 +150,7 @@ export default {
             this.errors = [];
           })
           .catch(error => {
-            console.log(error);
-            alert('que pasa')
+            alert(error);
           });
        }
     },
@@ -205,6 +203,7 @@ export default {
           { headers: { "content-type": "application/json" } }
         )
         .then(() => {
+          this.errors = [];
           this.name = "";
           this.album = "";
           this.price = "";
@@ -215,7 +214,7 @@ export default {
           this.errors = [];
         })
         .catch(error => {
-          console.log(error);
+          alert(error);
         });
       }
     }
