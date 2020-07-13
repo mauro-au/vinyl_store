@@ -36,11 +36,11 @@ html{
 .fade-enter-active, .fade-leave-active {
   transition: .3s;
 }
- 
+
 .fade-enter-active {
   transition-delay: .3s;
 }
- 
+
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
